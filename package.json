@@ -1,0 +1,12 @@
+{
+  "name": "ranter",
+  "version": "0.0.1",
+  "description": "A simple chat app",
+  "main": "index.js",
+  "repository": "matannoam/ranter",
+  "author": "Matan Noam Shavit <matannoam@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
