@@ -4,26 +4,35 @@
         <title>Ranter - a place to rant</title>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <style>
+            html, body { height: 100%; }
             body { background-color: rgb(56, 56, 56); }
             body, button { color: rgb(230, 220, 200); }
-            .bottom { position: fixed; bottom: 0; left: 0; width: 100%;}
+
+            #bodyContainer { display: flex; flex-direction: column; height: 100%; }
+            #messages { flex: 1 0 auto; }
+            #messageForm { flex: 0 0 auto; }
+
+
             #messageForm { background: rgb(18, 18, 18); padding: .5rem; }
-            #messageForm #messageContent { border: 0; padding: 10px; width: 10rem; margin-right: .5rem; }
+            #messageForm #messageContent { border: 0; padding: .5rem; width: 10rem; margin-right: .5rem; }
             #messageForm button { font-size: 1.2rem; background: rgb(75, 130, 255);}
-            #messages { list-style-type: none; margin: 0; padding: 0; }
+            #messages { list-style-type: none; margin: 0; padding: 0;}
             #messages li { padding: .5rem 1rem; font-size: 1.2rem; }
             #messages li:nth-child(odd) { background: rgb(36, 36, 36); }
         </style>
     </head>
     <body>
-        <ul id="messages">
-        </ul>
-        <div class="bottom">
-            <form id="messageForm" action="">
-                <input id="messageContent" name="messageContent" type="text" autocomplete="off" />
-                <button>Send</button>
-            </form>
+        <div id="bodyContainer">
+            <ul id="messages">
+            </ul>
+            <div class="bottom">
+                <form id="messageForm" action="">
+                    <input id="messageContent" name="messageContent" type="text" autocomplete="off" />
+                    <button>Send</button>
+                </form>
+            </div>
         </div>
+
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script type="text/javascript">
@@ -32,8 +41,8 @@
             form.submit(function() {
                 var input = $('#messageContent')
                 socket.emit('chat message', input.val())
-                input.val('') /* empty the message */
-                return false
+                input.val('')  /* empty the message */
+                return false  /* suppress navigation */
             })
             socket.on('chat message', function(message){
                 $('#messages').append($('<li>').text(message))
